@@ -10,7 +10,7 @@ namespace Environment {
 
         private IntQueue taskQueue = new IntQueue();
 
-        private void Awake() {
+        private void Start() {
             for(int i = 0; i < tasks.Count; i++) {
                 taskQueue.enqueue(i);
             }
