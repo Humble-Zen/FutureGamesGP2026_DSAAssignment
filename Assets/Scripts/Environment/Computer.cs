@@ -1,13 +1,28 @@
-﻿using Environment.Tasks;
+﻿using System.Collections.Generic;
+using Environment.Tasks;
 using UnityEngine;
 
 namespace Environment {
     public class Computer : MonoBehaviour, IInteractable {
-        [SerializeField]
-        private Task testTask = null; // Put your stack/queue here :)
 
+        [SerializeField]
+        private List<Task> tasks = new List<Task>();
+
+        private IntQueue taskQueue = new IntQueue();
+
+        private void Awake() {
+            for(int i = 0; i < tasks.Count; i++) {
+                taskQueue.enqueue(i);
+            }
+        }
         public void OnInteract() {
-            testTask.Execute();
+            if(taskQueue.isEmpty()) {
+                Debug.Log("Computer: no tasks left in the queue.");
+                return;
+            }
+
+            int nextIndex = taskQueue.dequeue();
+            tasks[nextIndex].Execute();
         }
     }
 }
